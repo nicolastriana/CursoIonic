@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { Componente } from '../../interfaces/interfaces';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-inicio',
@@ -7,83 +11,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InicioPage implements OnInit {
 
-  componentes: Componente[] = [
-    {
-      icon: 'american-football',
-      name: 'Action Sheet',
-      redirectTo: '/action-sheet'
-    },
-    {
-      icon: 'logo-apple-appstore',
-      name: 'Alert',
-      redirectTo: '/alert'
-    },
-    {
-      icon: 'beaker',
-      name: 'Avatar',
-      redirectTo: '/avatar'
-    },
-    {
-      icon: 'radio-button-on',
-      name: 'Botones y Routing',
-      redirectTo: '/botones'
-    },
-    {
-      icon: 'card',
-      name: 'Cards',
-      redirectTo: '/card'
-    },
-    {
-      icon: 'checkmark-circle-outline',
-      name: 'Checkbox',
-      redirectTo: '/check'
-    },
-    {
-      icon: 'calendar',
-      name: 'DateTime',
-      redirectTo: '/date-time'
-    },
-    {
-      icon: 'car',
-      name: 'Fabs',
-      redirectTo: '/fab'
-    },
-    {
-      icon: 'grid-outline',
-      name: 'Grid',
-      redirectTo: '/grid'
-    },
-    {
-      icon: 'infinite-outline',
-      name: 'Infinite-Scroll',
-      redirectTo: '/infinite'
-    },
-    {
-      icon: 'hammer-outline',
-      name: 'Input Forms',
-      redirectTo: '/input'
-    },
-    {
-      icon: 'list-outline',
-      name: 'List - Sliding',
-      redirectTo: '/list'
-    },
-    {
-      icon: 'reorder-three-outline',
-      name: 'List - Reorder',
-      redirectTo: '/list-reorder'
-    }
-  ];
+  componentes: Observable<Componente[]>;
 
-  constructor() { }
+  constructor( private menuCtrl: MenuController,
+               private dataService: DataService ) { }
 
   ngOnInit() {
+    this.componentes = this.dataService.getMenuOpts();
   }
 
-}
+  mostrarMenu() {
+    this.menuCtrl.open('first');
+  }
 
-interface Componente {
-  icon: string;
-  name: string;
-  redirectTo: string;
 }
